@@ -52,10 +52,10 @@ def get_task_details(task_id: str, db: Session = Depends(get_db)):
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
 
-    plan_obj = Plan(**json.loads(task.plan_json)) if task.plan_json else None
-    findings_obj = [ResearchFinding(**f) for f in json.loads(task.findings_json)] if task.findings_json else None
-    analysis_obj = AnalysisOutput(**json.loads(task.analysis_json)) if task.analysis_json else None
-    sources_obj = [Source(**s) for s in json.loads(task.sources_json)] if task.sources_json else None
+    plan_obj = Plan.model_validate(json.loads(task.plan_json)) if task.plan_json else None
+    findings_obj = [ResearchFinding.model_validate(f) for f in json.loads(task.findings_json)] if task.findings_json else None
+    analysis_obj = AnalysisOutput.model_validate(json.loads(task.analysis_json)) if task.analysis_json else None
+    sources_obj = [Source.model_validate(s) for s in json.loads(task.sources_json)] if task.sources_json else None
 
     return TaskDetailResponse(
         id=task.id,
@@ -84,7 +84,7 @@ def get_task_plan(task_id: str, db: Session = Depends(get_db)):
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
 
-    plan_obj = Plan(**json.loads(task.plan_json)) if task.plan_json else None
+    plan_obj = Plan.model_validate(json.loads(task.plan_json)) if task.plan_json else None
     return TaskPlanResponse(
         task_id=task.id,
         status=task.status,
@@ -125,7 +125,7 @@ def get_task_result(task_id: str, db: Session = Depends(get_db)):
     if not task:
         raise HTTPException(status_code=404, detail="Task not found")
 
-    sources = [Source(**s) for s in json.loads(task.sources_json)] if task.sources_json else []
+    sources = [Source.model_validate(s) for s in json.loads(task.sources_json)] if task.sources_json else []
     
     verdict = None
     if task.review_feedback:

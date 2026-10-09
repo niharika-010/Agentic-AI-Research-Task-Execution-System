@@ -22,7 +22,7 @@ async def planner_node(state: TaskState) -> Dict[str, Any]:
 
 async def research_node(state: TaskState) -> Dict[str, Any]:
     user_request = state["user_request"]
-    plan = Plan(**state["plan"])
+    plan = Plan.model_validate(state.get("plan") or {})
     findings, sources = await research_agent.run(user_request, plan)
     return {
         "current_stage": "researching",
@@ -32,7 +32,7 @@ async def research_node(state: TaskState) -> Dict[str, Any]:
 
 async def analysis_node(state: TaskState) -> Dict[str, Any]:
     user_request = state["user_request"]
-    findings = [ResearchFinding(**f) for f in state.get("research_findings", [])]
+    findings = [ResearchFinding.model_validate(f) for f in (state.get("research_findings") or [])]
     analysis = await analysis_agent.run(user_request, findings)
     return {
         "current_stage": "analyzing",
@@ -41,10 +41,10 @@ async def analysis_node(state: TaskState) -> Dict[str, Any]:
 
 async def writer_node(state: TaskState) -> Dict[str, Any]:
     user_request = state["user_request"]
-    plan = Plan(**state["plan"])
-    findings = [ResearchFinding(**f) for f in state.get("research_findings", [])]
-    analysis = AnalysisOutput(**state["analysis"])
-    sources = [Source(**s) for s in state.get("sources", [])]
+    plan = Plan.model_validate(state.get("plan") or {})
+    findings = [ResearchFinding.model_validate(f) for f in (state.get("research_findings") or [])]
+    analysis = AnalysisOutput.model_validate(state.get("analysis") or {})
+    sources = [Source.model_validate(s) for s in (state.get("sources") or [])]
     feedback = state.get("review_feedback")
 
     draft = await writer_agent.run(
