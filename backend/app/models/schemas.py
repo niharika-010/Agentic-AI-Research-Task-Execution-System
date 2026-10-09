@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import List, Optional, Any, Dict
-from pydantic import BaseModel, Field
+from pydantic import BaseModel, Field, ConfigDict
 
 # Request schemas
 class TaskCreateRequest(BaseModel):
@@ -63,8 +63,7 @@ class EventResponse(BaseModel):
     data: Optional[Dict[str, Any]] = None
     created_at: datetime
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 # Task Response Schemas
 class TaskSummaryResponse(BaseModel):
@@ -77,8 +76,7 @@ class TaskSummaryResponse(BaseModel):
     updated_at: datetime
     error_message: Optional[str] = None
 
-    class Config:
-        from_attributes = True
+    model_config = ConfigDict(from_attributes=True)
 
 class TaskDetailResponse(TaskSummaryResponse):
     plan: Optional[Plan] = None
