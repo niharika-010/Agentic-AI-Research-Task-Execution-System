@@ -2,7 +2,7 @@ import json
 import uuid
 import logging
 import asyncio
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Optional, List, Dict, Any
 from sqlalchemy.orm import Session
 from app.db.database import SessionLocal, TaskModel, EventModel

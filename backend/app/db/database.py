@@ -1,9 +1,12 @@
 import json
-from datetime import datetime
+from datetime import datetime, timezone
 from typing import Generator
 from sqlalchemy import create_engine, Column, String, Integer, DateTime, Text, ForeignKey, Index
 from sqlalchemy.orm import declarative_base, sessionmaker, relationship, Session
 from app.core.config import settings
+
+def utc_now():
+    return datetime.now(timezone.utc)
 
 # SQLite compatibility check
 connect_args = {}
@@ -39,8 +42,8 @@ class TaskModel(Base):
     sources_json = Column(Text, nullable=True)
     
     error_message = Column(Text, nullable=True)
-    created_at = Column(DateTime, default=datetime.now(timezone.utc))
-    updated_at = Column(DateTime, default=datetime.now(timezone.utc), onupdate=datetime.now(timezone.utc))
+    created_at = Column(DateTime, default=utc_now)
+    updated_at = Column(DateTime, default=utc_now, onupdate=utc_now)
 
     events = relationship("EventModel", back_populates="task", cascade="all, delete-orphan", order_by="EventModel.id")
 
@@ -55,7 +58,7 @@ class EventModel(Base):
     event_type = Column(String(32), nullable=False)  # started, tool_call, tool_result, output, revision, completed, failed
     message = Column(Text, nullable=False)
     data_json = Column(Text, nullable=True)
-    created_at = Column(DateTime, default=datetime.now(timezone.utc))
+    created_at = Column(DateTime, default=utc_now)
 
     task = relationship("TaskModel", back_populates="events")
 
