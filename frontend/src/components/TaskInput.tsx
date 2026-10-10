@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Sparkles, ArrowRight, Layers, Compass, Cpu, Search, CheckCircle } from 'lucide-react';
 
 interface TaskInputProps {

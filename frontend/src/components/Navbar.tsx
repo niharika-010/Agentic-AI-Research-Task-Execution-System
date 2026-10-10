@@ -1,5 +1,4 @@
-import React from 'react';
-import { Bot, History, Sparkles, CheckCircle2, AlertCircle } from 'lucide-react';
+import { Bot, History, Sparkles, AlertCircle } from 'lucide-react';
 
 interface NavbarProps {
   onNewTask: () => void;

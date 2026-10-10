@@ -1,4 +1,3 @@
-import React from 'react';
 import type { TaskSummary } from '../types';
 import { X, Clock, CheckCircle2, AlertTriangle, RefreshCw, ChevronRight } from 'lucide-react';
 

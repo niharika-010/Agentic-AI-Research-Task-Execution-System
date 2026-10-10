@@ -9,14 +9,12 @@ import {
   Clock, 
   Search, 
   FileText, 
-  CheckSquare, 
   AlertTriangle, 
   RefreshCw, 
   Bot, 
-  ArrowRight,
-  ExternalLink,
-  ShieldCheck,
-  Cpu
+  ExternalLink, 
+  ShieldCheck, 
+  Cpu 
 } from 'lucide-react';
 
 interface ExecutionMonitorProps {

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import type { 
@@ -6,16 +6,13 @@ import type {
   Source 
 } from '../types';
 import { 
-  CheckCircle2, 
-  Award, 
   Copy, 
   Check, 
   Download, 
   ExternalLink, 
   ShieldCheck, 
   BookOpen, 
-  RotateCcw,
-  Sparkles
+  RotateCcw
 } from 'lucide-react';
 
 interface FinalReportProps {

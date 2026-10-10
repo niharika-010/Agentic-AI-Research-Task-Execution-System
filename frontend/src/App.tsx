@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Navbar } from './components/Navbar';
 import { TaskInput } from './components/TaskInput';
 import { ExecutionMonitor } from './components/ExecutionMonitor';
@@ -6,7 +6,7 @@ import { FinalReport } from './components/FinalReport';
 import { HistorySidebar } from './components/HistorySidebar';
 import { api } from './services/api';
 import type { TaskDetail, TaskEvent, TaskSummary } from './types';
-import { AlertCircle, ArrowLeft, RotateCcw } from 'lucide-react';
+import { AlertCircle, ArrowLeft } from 'lucide-react';
 
 export function App() {
   const [activeTaskId, setActiveTaskId] = useState<string | null>(() => {
