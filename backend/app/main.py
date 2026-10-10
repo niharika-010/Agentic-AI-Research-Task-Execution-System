@@ -17,8 +17,11 @@ logger = logging.getLogger(__name__)
 async def lifespan(app: FastAPI):
     # Startup: Ensure database tables are created
     logger.info("Initializing database tables...")
-    init_db()
-    logger.info("Database initialized successfully.")
+    try:
+        init_db()
+        logger.info("Database initialized successfully.")
+    except Exception as e:
+        logger.error(f"Database table initialization warning: {e}. Will retry upon request.")
     yield
     logger.info("Application shutting down...")
 

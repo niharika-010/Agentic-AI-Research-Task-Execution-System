@@ -8,15 +8,14 @@ from app.core.config import settings
 def utc_now():
     return datetime.now(timezone.utc)
 
-# SQLite compatibility check
-connect_args = {}
-if settings.DATABASE_URL.startswith("sqlite"):
-    connect_args["check_same_thread"] = False
-
-# Support postgres:// URL format sometimes passed by Render (convert to postgresql://)
-db_url = settings.DATABASE_URL
+db_url = settings.DATABASE_URL or "sqlite:///./research_system.db"
 if db_url.startswith("postgres://"):
     db_url = db_url.replace("postgres://", "postgresql://", 1)
+
+# SQLite compatibility check
+connect_args = {}
+if db_url.startswith("sqlite"):
+    connect_args["check_same_thread"] = False
 
 engine = create_engine(db_url, connect_args=connect_args)
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
